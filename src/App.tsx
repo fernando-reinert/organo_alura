@@ -1,7 +1,9 @@
+import React from 'react'
 import { useState } from 'react';
 import Banner from './componentes/Banner';
 import Formulario from './componentes/Formulario';
 import Time from './componentes/Time';
+import { IColaborador } from './Compartilhado/interface/Icolaborador';
 
 function App() {
   const times = [
@@ -48,26 +50,25 @@ function App() {
     }
   ]
 
-  const [colaboradores, setColaboradores] = useState([])
+  const [colaboradores, setColaboradores] = useState<IColaborador[]>([])
 
-  const aoNovoColaboradorAdicionado = (colaborador) => { 
-  
+  const aoNovoColaboradorAdicionado = (colaborador: IColaborador) => {
+
     setColaboradores([...colaboradores, colaborador])
   }
 
   return (
     <div className="App">
-      <Banner />
-      <Formulario times={times.map(time => time.nome)} aoColaboradorCadastrado={colaborador=> aoNovoColaboradorAdicionado(colaborador)} />
+      <Banner enderecoImagem='/imagens/banner.png' />
+      <Formulario times={times.map(time => time.nome)} aoColaboradorCadastrado={colaborador => aoNovoColaboradorAdicionado(colaborador)} />
 
-      {times.map(times => 
-        <Time 
-          key={times.nome} 
-          nome={times.nome} 
-          corPrimaria={times.corPrimaria} 
-          corSecundaria={times.corSecundaria} 
-          colaboradores={colaboradores.filter(colaborador => colaborador.time === times.nome)}
-        />)}
+      {times.map(times => <Time
+        key={times.nome}
+        nome={times.nome}
+        corPrimaria={times.corPrimaria}
+        corSecundaria={times.corSecundaria}
+        colaboradores={colaboradores.filter(colaborador => colaborador.time === times.nome)}
+      />)}
 
     </div>
   );
